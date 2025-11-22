@@ -825,6 +825,8 @@ Twinkle.speedy.callback = function twinklespeedyCallback() {
 Twinkle.speedy.dialog = null;
 // Used throughout
 Twinkle.speedy.hasCSD = !!$('#delete-reason').length;
+// Add flag to distinguish instant delete vs menu
+Twinkle.speedy.isInstantDelete = false;
 
 // Prepares the speedy deletion dialog and displays it
 Twinkle.speedy.initDialog = function twinklespeedyInitDialog(callbackfunc) {
@@ -1019,6 +1021,9 @@ Twinkle.speedy.instantDelete = function twinklespeedyInstantDelete() {
 	if (!Twinkle.speedy.hasCSD) {
 		return;
 	}
+
+	// mark this as an instant delete so reload delay can be shorter
+    Twinkle.speedy.isInstantDelete = true;
 
 	const csdReason = decodeURIComponent($('#delete-reason').text()).replace(/\+/g, ' ');
 
@@ -1422,6 +1427,23 @@ Twinkle.speedy.generateCsdList = function twinklespeedyGenerateCsdList(list, mod
 	});
 };
 
+// Sets a timeout to reload the page after deletion/tagging
+Twinkle.speedy.setTimeout = function twinklespeedySetTimeout(delay) {
+	if (typeof delay === 'number') {
+        Twinkle.speedy.isInstantDelete = false;
+        return setTimeout(() => {
+			location.reload();
+		}, delay);
+    }
+
+    // Otherwise choose a sensible default depending on whether this was an instant delete
+    const defaultDelay = Twinkle.speedy.isInstantDelete ? 600 : 3000;
+
+	return setTimeout(() => {
+		location.reload();
+	}, defaultDelay);
+};
+
 Twinkle.speedy.callbacks = {
 	getTemplateCodeAndParams: function(params) {
 		let code, parameters, i;
@@ -1555,15 +1577,18 @@ Twinkle.speedy.callbacks = {
 				if (params.lognomination) {
 					Twinkle.speedy.callbacks.user.addToLog(params, initialContrib);
 				}
+				Twinkle.speedy.setTimeout();
 			}, () => {
 				// if user could not be notified, log nomination without mentioning that notification was sent
 				if (params.lognomination) {
 					Twinkle.speedy.callbacks.user.addToLog(params, null);
 				}
+				Twinkle.speedy.setTimeout();
 			});
 		} else if (params.lognomination) {
 			// log nomination even if the user notification wasn't sent
 			Twinkle.speedy.callbacks.user.addToLog(params, null);
+			Twinkle.speedy.setTimeout();
 		}
 	},
 
@@ -1685,6 +1710,7 @@ Twinkle.speedy.callbacks = {
 				});
 				Morebits.Status.info($bigtext[0], $link[0]);
 			}
+			Twinkle.speedy.setTimeout();
 		},
 		deleteRedirectsMain: function(apiobj) {
 			const response = apiobj.getResponse();
@@ -1707,6 +1733,7 @@ Twinkle.speedy.callbacks = {
 				if (current >= total) {
 					statusIndicator.info(now + ' (completed)');
 					Morebits.wiki.removeCheckpoint();
+					Twinkle.speedy.setTimeout();
 				}
 			};
 
