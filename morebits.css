@@ -84,12 +84,30 @@ form.quickform *
 form.quickform fieldset
 {
 	margin: .4em 0 1em;
+	box-shadow: 0 0 5px inset var(--background-color-neutral, #eaecf0);
+	border-radius: 4px;
+	border: none;
 }
 
 form.quickform legend
 {
-	color: var(--morebits-color-legend, #31628F);
+	font-family: 'Montserrat', sans-serif;
+	color: var(--color-inverted-fixed, #FFFFFF);
 	font-weight: bold;
+	margin: .4em auto;
+	padding: .4em 1em;
+	background: linear-gradient(90deg, #AE4CFF, #EB4D8C);
+	box-shadow: 0 0 3px rgba(205, 76, 196, 0.4);
+	border-radius: 4px;
+	font-size: 110%;
+	letter-spacing: 0.05em;
+	font-weight: normal;
+	transition: all 0.3s ease;
+}
+
+form.quickform legend:hover
+{
+	box-shadow: 0 0 5px rgba(205, 76, 196, 0.6);
 }
 
 form.quickform input[type=text], form.quickform select
@@ -238,7 +256,7 @@ div.morebits-usertext {
 .morebits-dialog {
 	border: 1px #666 solid;
 	font-family: sans-serif;
-	background-color: var(--morebits-bgcolor-dialog, #F0F8FF);
+	background-color: var(--background-color-base, #FFFFFF);
 	color: inherit;
 	background-image: none;
 }
@@ -257,15 +275,44 @@ div.morebits-usertext {
 }
 
 body .ui-dialog.morebits-dialog .ui-dialog-titlebar {
-	height: 1em;
-	background-color: var(--morebits-bgcolor-titlebar, #BCCADF) !important;
-	color: inherit;
+	border: none;
+	background-color: var(--background-color-base, #FFFFFF) !important;
+	color: var(--color-base, #101418);
 	background-image: none !important;
-	font: bold 108% sans-serif; /* 100% is 12px (from above) => 108% is 12.96px */
+	font: 125% sans-serif;
+	font-family: 'Montserrat', sans-serif;
 	overflow: hidden;
 	padding: .4em .3em .5em !important;
 	white-space: nowrap;
 }
+
+body .ui-dialog.morebits-dialog .ui-dialog-title {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+body .ui-dialog.morebits-dialog .ui-dialog-title .morebits-dialog-scriptname {
+	text-align: center;
+	padding: 4px 30px 10px 30px;
+	margin: 0 0 8px 0;
+	position: relative;
+	font-size: 150%;
+}
+
+body .ui-dialog.morebits-dialog .ui-dialog-title .morebits-dialog-scriptname::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 100%;
+	height: 3px;
+	background: linear-gradient(90deg, #00d9ff, #8a2be2);
+	transform: translateX(-50%);
+	box-shadow: 0 0 4px rgba(0, 217, 255, 0.4);
+}
+
 
 .morebits-dialog-scriptname {
 	font-weight: normal;

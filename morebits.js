@@ -5893,7 +5893,7 @@ Morebits.simpleWindow.prototype = {
 			$widget.find('.morebits-dialog-scriptname').remove();
 			const scriptnamespan = document.createElement('span');
 			scriptnamespan.className = 'morebits-dialog-scriptname';
-			scriptnamespan.textContent = this.scriptName + ' \u00B7 '; // U+00B7 MIDDLE DOT = &middot;
+			scriptnamespan.textContent = this.scriptName; // U+00B7 MIDDLE DOT = &middot;
 			$widget.find('.ui-dialog-title').prepend(scriptnamespan);
 		}
 

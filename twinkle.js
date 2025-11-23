@@ -222,14 +222,14 @@ Twinkle.addPortlet = function() {
 		case 'vector-2022':
 			navigation = '#right-navigation';
 			id = 'p-twinkle';
-			text = 'TW';
+			text = 'TWN';
 			// In order to get mw.util.addPortlet to generate a dropdown menu in vector and vector-2022, the nextnodeid must be p-cactions. Any other nextnodeid will generate a non-dropdown portlet instead.
 			nextnodeid = 'p-cactions';
 			break;
 		case 'timeless':
 			navigation = '#page-tools .sidebar-inner';
 			id = 'p-twinkle';
-			text = 'Twinkle';
+			text = 'Twinkle Nightly';
 			nextnodeid = 'p-userpagetools';
 			break;
 		default:
