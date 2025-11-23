@@ -218,7 +218,7 @@ form.quickform .morebits-tooltipButton:hover
 	padding: 10px 14px;
 	width: max-content;
 	max-width: 220px;
-	
+
 	/* Liquid Glass style */
 	backdrop-filter: blur(16px) saturate(160%) contrast(1.15);
 	-webkit-backdrop-filter: blur(16px) saturate(160%) contrast(1.15);
@@ -333,7 +333,7 @@ body .ui-dialog.morebits-dialog .ui-dialog-titlebar {
 	background-color: var(--background-color-base, #FFFFFF) !important;
 	color: var(--color-base, #101418);
 	background-image: none !important;
-	font: 125% sans-serif;
+	font-size: 125%;
 	font-family: 'Montserrat', sans-serif;
 	overflow: hidden;
 	padding: .4em .3em .5em !important;
@@ -388,18 +388,46 @@ body .ui-dialog.morebits-dialog .ui-dialog-title .morebits-dialog-scriptname::af
 	padding: 0;
 }
 
+body .ui-dialog.morebits-dialog .ui-dialog-buttonpane::before {
+	background: linear-gradient(135deg, #2E9FF5, #8a2be2, #AE4CFF, #D74DB2);
+	position: relative;
+	width: 120%;
+	height: 5px;
+	content: '';
+	top: 0;
+	left: 60%;
+	transform: translate(-60%, -5px);
+	box-shadow: 0 -2px 4px -2px rgba(156, 60, 241, 0.4);
+}
+
 body .ui-dialog.morebits-dialog .ui-dialog-buttonpane {
-	background-color: var(--morebits-bgcolor-titlebar, #BCCADF);
+	background-color: white;
+	border: none;
 	color: inherit;
 	margin: 0;
-	min-height: .5em;
+	height: 30px;
 	padding-left: 1.2em !important;
+	padding-top: 5px !important; /* 5px for the gradient line */
 }
 
 body .ui-dialog.morebits-dialog .ui-dialog-buttonpane button {
 	float: none;
-	margin: .2em 0 -.1em;
-	cursor: auto;
+	margin: .2em .5em -.1em;
+	padding: 0.3em 1.5em;
+	border-radius: 9999px; /* pill shape */
+	background: linear-gradient(135deg, #2E9FF5, #7d59f1, #AE4CFF, #EB4D8C);
+	background-size: 200%;
+	background-position: 100% 100%;
+	color: white;
+	border: none;
+	font-family: 'Montserrat', sans-serif;
+	box-shadow: 0 0 0 rgba(156, 60, 241, 0.4);
+	transition: all 0.6s ease;
+}
+
+body .ui-dialog.morebits-dialog .ui-dialog-buttonpane button:hover {
+	background-position: 0 0;
+	box-shadow: 0 0 3px rgba(156, 60, 241, 0.4);
 }
 
 .morebits-dialog-buttons {
@@ -409,7 +437,11 @@ body .ui-dialog.morebits-dialog .ui-dialog-buttonpane button {
 .morebits-dialog-footerlinks {
 	font-size: 97%; /* 100% is 12px (from above) => 97% is 11.64px */
 	float: right;
-	margin: .7em .4em 0 0;
+	margin: auto .4em auto 0;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	height: 100%;
 }
 
 body .ui-dialog.morebits-dialog .morebits-dialog-footerlinks a {
