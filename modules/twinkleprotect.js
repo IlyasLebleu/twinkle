@@ -800,7 +800,8 @@ Twinkle.protect.protectionTypes = [
 			{ label: 'Adding unsourced content (semi)', value: 'pp-semi-unsourced' },
 			{ label: 'BLP policy violations (semi)', value: 'pp-semi-blp' },
 			{ label: 'Sockpuppetry (semi)', value: 'pp-semi-sock' },
-			{ label: 'User talk of blocked user (semi)', value: 'pp-semi-usertalk' }
+			{ label: 'User talk of blocked user (semi)', value: 'pp-semi-usertalk' },
+			{ label: 'Noticeboard LTA (semi)', value: 'pp-sock-noticeboard' }
 		]
 	},
 	{
@@ -863,6 +864,12 @@ Twinkle.protect.protectionPresetsInfo = {
 		edit: 'sysop',
 		move: 'sysop',
 		reason: '[[WP:PP#Content disputes|Edit warring / content dispute]]'
+	},
+	'pp-sock-noticeboard': {
+		edit: 'autoconfirmed',
+		expiry: '2 hours',
+		reason: 'Persistent [[WP:Sock puppetry|sock puppetry]]',
+		template: 'pp-sock'
 	},
 	'pp-vandalism': {
 		edit: 'sysop',
@@ -940,14 +947,12 @@ Twinkle.protect.protectionPresetsInfo = {
 	},
 	'pp-semi-usertalk': {
 		edit: 'autoconfirmed',
-		move: 'autoconfirmed',
 		expiry: 'infinity',
 		reason: '[[WP:PP#Talk-page protection|Inappropriate use of user talk page while blocked]]',
 		template: 'pp-usertalk'
 	},
 	'pp-semi-template': { // removed for now
 		edit: 'autoconfirmed',
-		move: 'autoconfirmed',
 		expiry: 'infinity',
 		reason: '[[WP:High-risk templates|Highly visible template]]',
 		template: 'pp-template'
@@ -1377,6 +1382,7 @@ Twinkle.protect.callback.evaluate = function twinkleprotectCallbackEvaluate(e) {
 				case 'pp-30-500':
 					typename = 'extended confirmed protection';
 					break;
+				case 'pp-sock-noticeboard':
 				case 'pp-semi-vandalism':
 				case 'pp-semi-disruptive':
 				case 'pp-semi-unsourced':
@@ -1448,6 +1454,7 @@ Twinkle.protect.callback.evaluate = function twinkleprotectCallbackEvaluate(e) {
 				case 'pp-semi-usertalk':
 					typereason = 'Inappropriate use of user talk page while blocked';
 					break;
+				case 'pp-sock-noticeboard':
 				case 'pp-semi-sock':
 				case 'pp-30-500-sock':
 					typereason = 'Persistent [[WP:SOCK|sockpuppetry]]';

@@ -821,8 +821,9 @@ Twinkle.block.callback.change_action = function twinkleblockCallbackChangeAction
  *   autoblock: <autoblock any IP addresses used (for registered users only)>
  *   disabletalk: <disable user from editing their own talk page while blocked>
  *   expiry: <string - expiry timestamp, can include relative times like "5 months", "2 weeks" etc>
- *   forUnregisteredOnly: <show block option in the interface only if the relevant user is an IP>
- *   forRegisteredOnly: <show block option in the interface only if the relevant user is registered>
+ *   forIPsOnly: <show block option in the interface only if the relevant user is an IP>
+ *   forTempAccountsOnly: <show block option in the interface only if the relevant user is a temporary account>
+ *   forRegisteredOnly: <show block option in the interface only if the relevant user is a temporary account or regular account>
  *   label: <string - label for the option of the dropdown in the interface (keep brief)>
  *   noemail: prevent the user from sending email through Special:Emailuser
  *   pageParam: <set if the associated block template accepts a page parameter>
@@ -845,7 +846,7 @@ Twinkle.block.callback.change_action = function twinkleblockCallbackChangeAction
 Twinkle.block.blockPresetsInfo = {
 	anonblock: {
 		expiry: '31 hours',
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nocreate: true,
 		nonstandard: true,
 		reason: '{{anonblock}}',
@@ -853,7 +854,7 @@ Twinkle.block.blockPresetsInfo = {
 	},
 	'anonblock - school': {
 		expiry: '36 hours',
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nocreate: true,
 		nonstandard: true,
 		reason: '{{anonblock}} <!-- Likely a school based on behavioral evidence -->',
@@ -862,7 +863,7 @@ Twinkle.block.blockPresetsInfo = {
 	},
 	'blocked proxy': {
 		expiry: '1 year',
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nocreate: true,
 		nonstandard: true,
 		hardblock: true,
@@ -871,7 +872,7 @@ Twinkle.block.blockPresetsInfo = {
 	},
 	'CheckUser block': {
 		expiry: '1 week',
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nocreate: true,
 		nonstandard: true,
 		reason: '{{CheckUser block}}',
@@ -887,7 +888,7 @@ Twinkle.block.blockPresetsInfo = {
 		sig: '~~~~'
 	},
 	'checkuserblock-wide': {
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nocreate: true,
 		nonstandard: true,
 		reason: '{{checkuserblock-wide}}',
@@ -895,7 +896,7 @@ Twinkle.block.blockPresetsInfo = {
 	},
 	colocationwebhost: {
 		expiry: '1 year',
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nonstandard: true,
 		reason: '{{colocationwebhost}}',
 		sig: null
@@ -909,14 +910,14 @@ Twinkle.block.blockPresetsInfo = {
 		sig: '~~~~'
 	},
 	'school block': {
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nocreate: true,
 		nonstandard: true,
 		reason: '{{school block}}',
 		sig: '~~~~'
 	},
 	spamblacklistblock: {
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		expiry: '1 month',
 		disabletalk: true,
 		nocreate: true,
@@ -926,19 +927,19 @@ Twinkle.block.blockPresetsInfo = {
 		reason: '{{rangeblock}}',
 		nocreate: true,
 		nonstandard: true,
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		sig: '~~~~'
 	},
 	tor: {
 		expiry: '1 year',
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nonstandard: true,
 		reason: '{{Tor}}',
 		sig: null
 	},
 	webhostblock: {
 		expiry: '1 year',
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nonstandard: true,
 		reason: '{{webhostblock}}',
 		sig: null
@@ -955,7 +956,7 @@ Twinkle.block.blockPresetsInfo = {
 	'uw-ablock': {
 		autoblock: true,
 		expiry: '31 hours',
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nocreate: true,
 		pageParam: true,
 		reasonParam: true,
@@ -1005,7 +1006,9 @@ Twinkle.block.blockPresetsInfo = {
 		suppressArticleInSummary: true
 	},
 	'uw-blocknotalk': {
+		autoblock: true,
 		disabletalk: true,
+		nocreate: true,
 		pageParam: true,
 		reasonParam: true,
 		summary: 'You have been blocked from editing and your user talk page access has been disabled',
@@ -1088,7 +1091,8 @@ Twinkle.block.blockPresetsInfo = {
 		summary: 'You have been blocked from editing for attempting to [[WP:HARASS|harass]] other users'
 	},
 	'uw-ipevadeblock': {
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
+		expiry: '1 week',
 		nocreate: true,
 		reason: '[[WP:Blocking policy#Evasion of blocks|Block evasion]]',
 		summary: 'Your IP address has been blocked from editing because it has been used to [[WP:EVADE|evade a previous block]]'
@@ -1180,6 +1184,14 @@ Twinkle.block.blockPresetsInfo = {
 		summary: 'Your user talk page access has been disabled',
 		useInitialOptions: true
 	},
+	'uw-tempevadeblock': {
+		autoblock: true,
+		expiry: 'infinity',
+		forTempAccountsOnly: true,
+		nocreate: true,
+		reason: '[[WP:Blocking policy#Evasion of blocks|Block evasion]]',
+		summary: 'Your temporary account has been blocked from editing because it has been used to [[WP:EVADE|evade a previous block]]'
+	},
 	'uw-ublock': {
 		expiry: 'infinity',
 		forRegisteredOnly: true,
@@ -1261,7 +1273,7 @@ Twinkle.block.blockPresetsInfo = {
 	},
 	'zombie proxy': {
 		expiry: '1 month',
-		forUnregisteredOnly: true,
+		forIPsOnly: true,
 		nocreate: true,
 		nonstandard: true,
 		reason: '{{zombie proxy}}',
@@ -1379,6 +1391,7 @@ Twinkle.block.blockGroups = [
 			{ label: 'Advertising', value: 'uw-adblock' },
 			{ label: 'Arbitration enforcement', value: 'uw-aeblock' },
 			{ label: 'Block evasion - IP', value: 'uw-ipevadeblock' },
+			{ label: 'Block evasion - Temporary account', value: 'uw-tempevadeblock' },
 			{ label: 'BLP violations', value: 'uw-bioblock' },
 			{ label: 'Copyright violations', value: 'uw-copyrightblock' },
 			{ label: 'Creating nonsense pages', value: 'uw-npblock' },
@@ -1487,16 +1500,21 @@ Twinkle.block.callback.filtered_block_groups = function twinkleblockCallbackFilt
 
 			const blockSettings = Twinkle.block.blockPresetsInfo[blockPreset.value];
 
-			let registrationRestrict;
+			let allowedUserType;
+			// for regular users and temporary accounts
 			if (blockSettings.forRegisteredOnly) {
-				registrationRestrict = Twinkle.block.isRegistered;
-			} else if (blockSettings.forUnregisteredOnly) {
-				registrationRestrict = !Twinkle.block.isRegistered;
+				allowedUserType = Twinkle.block.isRegistered;
+			// for temporary accounts
+			} else if (blockSettings.forTempAccountsOnly) {
+				allowedUserType = mw.util.isTemporaryUser(mw.config.get('wgRelevantUserName'));
+			// for IPs
+			} else if (blockSettings.forIPsOnly) {
+				allowedUserType = !Twinkle.block.isRegistered;
 			} else {
-				registrationRestrict = true;
+				allowedUserType = true;
 			}
 
-			if (!(blockSettings.templateName && show_template) && registrationRestrict) {
+			if (!(blockSettings.templateName && show_template) && allowedUserType) {
 				const templateName = blockSettings.templateName || blockPreset.value;
 				return {
 					label: (show_template ? '{{' + templateName + '}}: ' : '') + blockPreset.label,
