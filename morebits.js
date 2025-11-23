@@ -5848,6 +5848,12 @@ Morebits.simpleWindow = function SimpleWindow(width, height) {
 
 	// add skin-invert to "close" button
 	$('.morebits-dialog .ui-dialog-titlebar-close').addClass('skin-invert');
+
+	// create the separator bar element using DOM API to avoid parsing HTML literals
+	const buttonPaneBar = document.createElement('div');
+	buttonPaneBar.className = 'ui-dialog-buttonpanebar';
+	// insert before the button pane
+	$widget.find('.ui-dialog-buttonpane').before(buttonPaneBar);
 };
 
 Morebits.simpleWindow.prototype = {
