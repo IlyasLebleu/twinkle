@@ -13,7 +13,7 @@ html {
 	--morebits-color-status-status: #4682B4;
 	--morebits-color-legend: #31628F;
 	--morebits-color-tooltip: #0000cd;
-	--morebits-color-info: #228B22;
+	--morebits-color-info: #0A8758; /* AA accessible on white background */
 	--morebits-color-warning: #FF4500;
 	--morebits-color-titlebar-links: #3062AD;
 	--morebits-bgcolor-dialog: #F0F8FF;
@@ -25,7 +25,7 @@ html {
 		--morebits-color-status-status: #A6C4DE;
 		--morebits-color-legend: #6B9DCC;
 		--morebits-color-tooltip: #7A7AFF;
-		--morebits-color-info: #6BDB6B;
+		--morebits-color-info: #6bdbb0;
 		--morebits-color-warning: #FF6D38;
 		--morebits-color-titlebar-links: #8BADDF;
 		--morebits-bgcolor-dialog: #141c26;
@@ -84,7 +84,7 @@ form.quickform *
 form.quickform fieldset
 {
 	margin: 3em 0 1em;
-	box-shadow: 0 0 5px inset var(--background-color-neutral, #eaecf0);
+	box-shadow: 0 0 5px inset rgba( 0, 0, 0, 0.06 );
 	border-radius: 4px;
 	border: none;
 	position: relative;
@@ -176,7 +176,7 @@ form.quickform textarea
 
 form.quickform input:disabled + label
 {
-	color: var(--color-disabled, #72777d);
+	color: var(--color-disabled, #a2a9b1); /* matches Codex's disabled color */
 }
 
 form.quickform span.quickformDescription
@@ -199,15 +199,50 @@ form.quickform .quickformSubgroup
 /* The tooltip button and the content itself */
 form.quickform .morebits-tooltipButton
 {
-	color: var(--morebits-color-tooltip, mediumblue);
+	color: var(--color-disabled, #a2a9b1);
 	font-weight: bold;
 	cursor: help;
 	padding: .3em;
+	transition: color 0.3s ease;
 }
+
+form.quickform .morebits-tooltipButton:hover
+{
+	color: #EB4D8C;
+}
+
 .morebits-ui-tooltip
 {
 	padding: 4px 6px 4px 6px;
 	font-size: 13px;
+	padding: 10px 14px;
+	width: max-content;
+	max-width: 220px;
+	
+	/* Liquid Glass style */
+	backdrop-filter: blur(16px) saturate(160%) contrast(1.15);
+	-webkit-backdrop-filter: blur(16px) saturate(160%) contrast(1.15);
+	background: rgba(250, 251, 253, 0.5);
+	border: none;
+
+	/* Inset shadow */
+	border-radius: 0px 10px 10px 0px;
+	box-shadow: inset 0 0 10px rgba(250, 250, 250, 0.5);
+
+	/* Typography */
+	color: var(--morebits-color-base, #101418);
+}
+
+.morebits-ui-tooltip::before
+{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 3px;
+	background: linear-gradient(to bottom, #2E9FF5, #8a2be2, #AE4CFF, #D74DB2);
+	box-shadow: 0 0 3px rgba(156, 60, 241, 0.4);
 }
 
 
@@ -271,11 +306,13 @@ div.morebits-usertext {
 /* Morebits.SimpleWindow */
 
 .morebits-dialog {
-	border: 1px #666 solid;
+	border: none;
+	box-shadow: 0 0 8px 0 rgba( 0, 0, 0, 0.06 );
 	font-family: sans-serif;
 	background-color: var(--background-color-base, #FFFFFF);
 	color: inherit;
 	background-image: none;
+	border-radius: 10px;
 }
 
 /* px translations in comments are w.r.t standard browser settings,
@@ -389,13 +426,6 @@ body .ui-dialog.morebits-dialog .morebits-dialog-footerlinks a {
 
 .ui-icon-inline {
 	display: inline-block;
-}
-
-.morebits-ui-tooltip {
-	background: var(--background-color-neutral-subtle, #f8f9fa);
-	color: inherit;
-	border-color: var(--border-color-base, #a2ab91);
-	box-shadow: 0 0 5px #a2ab91;
 }
 
 /* For styling message/warning boxes. Cannot use MediaWiki ombox class because it will be deprecated soon. */
