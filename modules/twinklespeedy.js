@@ -1322,7 +1322,7 @@ Twinkle.speedy.callback.priorDeletionCount = function () {
 
 				// 3+ seems problematic
 				if (delCount >= 3) {
-					$('#prior-deletion-count').css('color', 'red');
+					$('#prior-deletion-count').addClass('morebits_status_warn');
 				}
 			}
 

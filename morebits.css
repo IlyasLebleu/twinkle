@@ -12,10 +12,8 @@
 html {
 	--morebits-color-status-status: #4682B4;
 	--morebits-color-legend: #31628F;
-	--morebits-color-tooltip: #0000cd;
 	--morebits-color-info: #0A8758; /* AA accessible on white background */
-	--morebits-color-warning: #ec2640;
-	--morebits-color-titlebar-links: #3062AD;
+	--morebits-color-warning: #E81348; /* AA accessible on white background */
 	--morebits-bgcolor-dialog: #F0F8FF;
 	--morebits-bgcolor-titlebar: #BCCADF;
 }
@@ -24,10 +22,8 @@ html {
 	html.skin-theme-clientpref-night {
 		--morebits-color-status-status: #A6C4DE;
 		--morebits-color-legend: #6B9DCC;
-		--morebits-color-tooltip: #7A7AFF;
-		--morebits-color-info: #6bdbb0;
-		--morebits-color-warning: #FF6D38;
-		--morebits-color-titlebar-links: #8BADDF;
+		--morebits-color-info: #4AF2B2;
+		--morebits-color-warning: #FF6276;
 		--morebits-bgcolor-dialog: #141c26;
 		--morebits-bgcolor-titlebar: #1c2a52;
 	}
@@ -37,10 +33,8 @@ html {
 	html.skin-theme-clientpref-os {
 		--morebits-color-status-status: #A6C4DE;
 		--morebits-color-legend: #6B9DCC;
-		--morebits-color-tooltip: #7A7AFF;
-		--morebits-color-info: #6BDB6B;
-		--morebits-color-warning: #FF6D38;
-		--morebits-color-titlebar-links: #8BADDF;
+		--morebits-color-info: #4AF2B2;
+		--morebits-color-warning: #FF6276;
 		--morebits-bgcolor-dialog: #141c26;
 		--morebits-bgcolor-titlebar: #1c2a52;
 	}
@@ -53,15 +47,15 @@ html {
 }
 
 .morebits_status_info {
-	color: var(--morebits-color-info, #228B22);
+	color: var(--morebits-color-info, #0A8758);
 }
 
 .morebits_status_warn {
-	color: var(--morebits-color-warning, #FF4500);
+	color: var(--morebits-color-warning, #E81348);
 }
 
 .morebits_status_error {
-	color: var(--morebits-color-warning, #FF4500);
+	color: var(--morebits-color-warning, #E81348);
 	font-weight: bold;
 }
 
@@ -74,6 +68,7 @@ form.quickform
 	margin: auto;
 	padding: .5em;
 	color: var(--color-base, #202122);
+	letter-spacing: .02em;
 }
 
 form.quickform *
@@ -137,26 +132,17 @@ form.quickform select
 {
 	border: none;
 	margin-left: .2em;
+	margin-top: 2px;
+	margin-bottom: 2px;
 	border-radius: 9999px; /* pill shape */
 	padding: 4px 12px;
-	background: linear-gradient(135deg, #2E9FF5, #7d59f1, #AE4CFF, #EB4D8C);
-	background-size: 150%;
-	background-position: 50% 50%;
-	color: white;
-	box-shadow: 0 0 0 rgba(156, 60, 241, 0.3);
-	transition: all 0.6s ease;
-	font-family: 'Montserrat', sans-serif;
-}
-
-form.quickform select:hover, form.quickform select:focus
-{
-	background-position: 0 0;
-	box-shadow: 0 0 3px rgba(156, 60, 241, 0.3);
+	background: var(--background-color-neutral, #eaecf0);
+	color: var(--color-base, #101418);
 }
 
 form.quickform select:disabled
 {
-	background: var(--background-color-neutral-subtle, #f0f0f0);
+	background: var(--background-color-neutral-subtle, #f8f9fa);
 	color: var(--color-disabled, #a2a9b1); /* matches Codex's disabled color */
 	box-shadow: none;
 }
@@ -188,7 +174,10 @@ form.quickform h5
 {
 	margin: .5em 0 0;
 	padding: .3em .2em .2em;
-	font-size: 108%; /* 100% is 12px => 108% is 12.96px */
+	font-size: 120%; /* 100% is 12px => 120% is 14.4px */
+	font-weight: normal;
+	font-family: 'Montserrat', sans-serif;
+	font-style: italic;
 }
 
 /* only give the top border to headers with something above them */
@@ -202,12 +191,21 @@ form.quickform textarea
 	width: 100%;
 	height: 4em;
 	font-size: 150%;
+	border-radius: 8px;
 }
 
 form.quickform input:disabled + label
 {
 	color: var(--color-disabled, #a2a9b1); /* matches Codex's disabled color */
 }
+
+form.quickform input + label
+{
+	margin-left: .2em;
+	display: inline-block;
+	transform: translateY(-1px);
+}
+
 
 form.quickform span.quickformDescription
 {
@@ -260,7 +258,7 @@ form.quickform .morebits-tooltipButton:hover
 	box-shadow: inset 0 0 10px rgba(250, 250, 250, 0.5);
 
 	/* Typography */
-	color: var(--morebits-color-base, #101418);
+	color: var(--color-base, #101418);
 }
 
 .morebits-ui-tooltip::before
@@ -375,6 +373,7 @@ body .ui-dialog.morebits-dialog .ui-dialog-title {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	font-weight: 600;
 }
 
 body .ui-dialog.morebits-dialog .ui-dialog-title .morebits-dialog-scriptname {
@@ -403,11 +402,15 @@ body .ui-dialog.morebits-dialog .ui-dialog-title .morebits-dialog-scriptname::af
 }
 
 .ui-dialog.morebits-dialog .ui-dialog-titlebar-close {
-	height: 100%;
 	right: 0;
-	top: auto;
+	top: 0;
 	width: 2em;
-	margin: -.5em -.15em 0;
+	height: 2em;
+	margin: 2px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
 }
 
 .ui-dialog.morebits-dialog .ui-dialog-titlebar-close span {
